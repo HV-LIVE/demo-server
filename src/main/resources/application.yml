@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: ${project.name}
+  datasource:
+    url: jdbc:mysql://192.168.2.2:3306/hv_live_demo?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 123456q
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQL57Dialect
+        jdbc.time_zone: Asia/Shanghai
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    ignore-missing-migrations: true
+    out-of-order: true
+    baselineOnMigrate: true
+  jackson:
+    default-property-inclusion: non_null
