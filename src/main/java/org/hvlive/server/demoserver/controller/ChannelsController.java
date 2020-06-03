@@ -1,12 +1,14 @@
 package org.hvlive.server.demoserver.controller;
 
 import org.hvlive.server.demoserver.dto.ChannelDTO;
+import org.hvlive.server.demoserver.dto.LiveDTO;
 import org.hvlive.server.demoserver.service.ChannelService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/channel")
+@RestController
+@RequestMapping("/channels")
 public class ChannelsController {
     private ChannelService channelService;
 
@@ -15,8 +17,13 @@ public class ChannelsController {
     }
 
     @GetMapping
-    public List<ChannelDTO> getAllChannels() {
-        return channelService.getAllChannels();
+    public List<ChannelDTO> getAllChannels(@RequestParam(required = false, defaultValue = "false") boolean excludeSections) {
+        return excludeSections ? channelService.getAllChannels() : channelService.getAllChannelsAndSections();
+    }
+
+    @GetMapping("/available")
+    public List<ChannelDTO> getAvailableChannels() {
+        return channelService.getAvailableChannels();
     }
 
     @PostMapping

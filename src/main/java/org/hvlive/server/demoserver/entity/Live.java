@@ -24,6 +24,7 @@ public class Live {
     private Long id;
 
     private String title;
+    private Long channelId;
     private Long sectionId;
     private Long userId;
 

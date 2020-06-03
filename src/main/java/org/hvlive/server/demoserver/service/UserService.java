@@ -34,6 +34,10 @@ public class UserService {
         return userRepository.findById(id).map(UserDTO::fromEntity).orElse(null);
     }
 
+    public UserDTO getUser(String account, String password) {
+        return userRepository.findByAccountAndPassword(account, password).map(UserDTO::fromEntity).orElseThrow(BadRequestException::new);
+    }
+
     @Transactional
     public UserDTO createUser(UserDTO userDTO) {
         if (userRepository.existsByAccount(userDTO.getAccount())) {

@@ -49,6 +49,7 @@ CREATE TABLE `live`
 (
     `id`          bigint(20)  NOT NULL AUTO_INCREMENT,
     `title`       varchar(50) NOT NULL COMMENT '标题',
+    `channel_id`  bigint(20)  NOT NULL COMMENT '所属频道ID',
     `section_id`  bigint(20)  NOT NULL COMMENT '所属栏目ID',
     `user_id`     bigint(20)  NOT NULL COMMENT '所属用户ID',
     `start_time`  datetime(3) NOT NULL COMMENT '开始时间',

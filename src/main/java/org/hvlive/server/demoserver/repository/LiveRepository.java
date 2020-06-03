@@ -9,7 +9,9 @@ import java.util.List;
 
 @Repository
 public interface LiveRepository extends JpaRepository<Live, Long> {
-    List<Live> findAllBySectionId(Long sectionId);
+    List<Live> findAllByUserId(Long userId);
+
+    List<Live> findAllByStartTimeLessThanAndEndTimeGreaterThan(LocalDateTime startTime, LocalDateTime endTime);
 
     boolean existsByUserIdAndStartTimeBetween(Long userId, LocalDateTime startTime, LocalDateTime endTime);
 

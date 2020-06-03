@@ -1,13 +1,14 @@
 package org.hvlive.server.demoserver.service;
 
 import org.hvlive.server.demoserver.dto.SectionDTO;
+import org.hvlive.server.demoserver.dto.UserDTO;
 import org.hvlive.server.demoserver.entity.Section;
 import org.hvlive.server.demoserver.exception.BadRequestException;
 import org.hvlive.server.demoserver.repository.SectionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SectionService {
@@ -19,6 +20,25 @@ public class SectionService {
 
     public List<SectionDTO> getSections(Long channelId) {
         return SectionDTO.fromEntities(sectionRepository.findAllByChannelId(channelId));
+    }
+
+    public Map<Long, SectionDTO> getSections(Set<Long> ids) {
+        Map<Long, SectionDTO> sections = new HashMap<>();
+        sectionRepository.findAllByIdIn(ids).forEach(section -> sections.put(section.getId(), SectionDTO.fromEntity(section)));
+        return sections;
+    }
+
+    public Map<Long, List<SectionDTO>> getSectionsGroupByChannelId() {
+        Map<Long, List<SectionDTO>> result = new HashMap<>();
+        sectionRepository.findAll().forEach((section -> {
+            List<SectionDTO> sections = result.computeIfAbsent(section.getChannelId(), k -> new ArrayList<>());
+            sections.add(SectionDTO.fromEntity(section));
+        }));
+        return result;
+    }
+
+    public SectionDTO getSection(Long id) {
+        return sectionRepository.findById(id).map(SectionDTO::fromEntity).orElse(null);
     }
 
     @Transactional

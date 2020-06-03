@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/live")
+@RestController
+@RequestMapping("/lives")
 public class LivesController {
     private LiveService liveService;
 
@@ -15,8 +16,13 @@ public class LivesController {
     }
 
     @GetMapping
-    public List<LiveDTO> getLives(@RequestParam Long sectionId) {
-        return liveService.getLives(sectionId);
+    public List<LiveDTO> getLives(@RequestParam(required = false) Long userId) {
+        return userId == null ? liveService.getAllLives() : liveService.getLives(userId);
+    }
+
+    @GetMapping("/available")
+    public List<LiveDTO> getAvailableLives() {
+        return liveService.getAvailableLives();
     }
 
     @PostMapping

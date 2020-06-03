@@ -22,13 +22,12 @@ public class SystemConfigService {
 
     @Transactional
     public SystemConfigDTO updateSystemConfig(SystemConfigDTO systemConfigDTO) {
-        SystemConfig systemConfig = SystemConfig.builder()
-                .id(1L)
-                .pushIp(systemConfigDTO.getPushIp())
-                .pushPort(systemConfigDTO.getPushPort())
-                .pullIp(systemConfigDTO.getPullIp())
-                .pullPort(systemConfigDTO.getPullPort())
-                .build();
+        SystemConfig systemConfig = systemConfigRepository.findById(1L)
+                .orElseGet(() -> SystemConfig.builder().id(1L).build());
+        systemConfig.setPushIp(systemConfigDTO.getPushIp());
+        systemConfig.setPushPort(systemConfigDTO.getPushPort());
+        systemConfig.setPullIp(systemConfigDTO.getPullIp());
+        systemConfig.setPullPort(systemConfigDTO.getPullPort());
         systemConfigRepository.saveAndFlush(systemConfig);
         return SystemConfigDTO.fromEntity(systemConfig);
     }

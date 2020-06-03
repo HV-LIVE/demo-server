@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hvlive.server.demoserver.entity.Channel;
 import org.hvlive.server.demoserver.entity.Live;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,10 @@ import java.util.stream.Collectors;
 public class LiveDTO {
     private Long id;
     private String title;
+    private Long channelId;
+    private ChannelDTO channel;
     private Long sectionId;
+    private SectionDTO section;
     private Long userId;
     private UserDTO user;
     private LocalDateTime startTime;
@@ -26,11 +30,14 @@ public class LiveDTO {
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
-    public static LiveDTO fromEntity(Live live, UserDTO user) {
+    public static LiveDTO fromEntity(Live live, ChannelDTO channel, SectionDTO section, UserDTO user) {
         return LiveDTO.builder()
                 .id(live.getId())
                 .title(live.getTitle())
+                .channelId(live.getChannelId())
+                .channel(channel)
                 .sectionId(live.getSectionId())
+                .section(section)
                 .userId(live.getUserId())
                 .user(user)
                 .startTime(live.getStartTime())
@@ -40,9 +47,9 @@ public class LiveDTO {
                 .build();
     }
 
-    public static List<LiveDTO> fromEntities(List<Live> lives, Map<Long, UserDTO> users) {
+    public static List<LiveDTO> fromEntities(List<Live> lives, Map<Long, ChannelDTO> channels, Map<Long, SectionDTO> sections, Map<Long, UserDTO> users) {
         return lives.stream()
-                .map(live -> LiveDTO.fromEntity(live, users.get(live.getUserId())))
+                .map(live -> LiveDTO.fromEntity(live, channels.get(live.getChannelId()), sections.get(live.getSectionId()), users.get(live.getUserId())))
                 .collect(Collectors.toList());
     }
 }
