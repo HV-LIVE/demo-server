@@ -3,6 +3,7 @@ package org.hvlive.server.demoserver.service;
 import org.hvlive.server.demoserver.dto.LiveDTO;
 import org.hvlive.server.demoserver.entity.Live;
 import org.hvlive.server.demoserver.exception.BadRequestException;
+import org.hvlive.server.demoserver.exception.Errors;
 import org.hvlive.server.demoserver.repository.LiveRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,10 +74,10 @@ public class LiveService {
     @Transactional
     public LiveDTO createLive(LiveDTO liveDTO) {
         if (liveRepository.existsByUserIdAndStartTimeBetween(liveDTO.getUserId(), liveDTO.getStartTime(), liveDTO.getEndTime())) {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.Live.CODE_TIME_CONFLICT, Errors.Live.MESSAGE_TIME_CONFLICT);
         }
         if (liveRepository.existsByUserIdAndEndTimeBetween(liveDTO.getUserId(), liveDTO.getStartTime(), liveDTO.getEndTime())) {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.Live.CODE_TIME_CONFLICT, Errors.Live.MESSAGE_TIME_CONFLICT);
         }
         Live live = Live.builder()
                 .title(liveDTO.getTitle())
@@ -93,10 +94,10 @@ public class LiveService {
     @Transactional
     public LiveDTO updateLive(LiveDTO liveDTO) {
         if (liveRepository.existsByIdNotAndUserIdAndStartTimeBetween(liveDTO.getId(), liveDTO.getUserId(), liveDTO.getStartTime(), liveDTO.getEndTime())) {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.Live.CODE_TIME_CONFLICT, Errors.Live.MESSAGE_TIME_CONFLICT);
         }
         if (liveRepository.existsByIdNotAndUserIdAndEndTimeBetween(liveDTO.getId(), liveDTO.getUserId(), liveDTO.getStartTime(), liveDTO.getEndTime())) {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.Live.CODE_TIME_CONFLICT, Errors.Live.MESSAGE_TIME_CONFLICT);
         }
         Live live = Live.builder()
                 .id(liveDTO.getId())

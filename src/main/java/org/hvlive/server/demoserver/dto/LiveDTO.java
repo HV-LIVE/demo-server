@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hvlive.server.demoserver.entity.Channel;
 import org.hvlive.server.demoserver.entity.Live;
 
 import java.time.LocalDateTime;

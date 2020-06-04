@@ -1,9 +1,9 @@
 package org.hvlive.server.demoserver.service;
 
 import org.hvlive.server.demoserver.dto.ChannelDTO;
-import org.hvlive.server.demoserver.dto.SectionDTO;
 import org.hvlive.server.demoserver.entity.Channel;
 import org.hvlive.server.demoserver.exception.BadRequestException;
+import org.hvlive.server.demoserver.exception.Errors;
 import org.hvlive.server.demoserver.repository.ChannelRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class ChannelService {
     @Transactional
     public ChannelDTO createChannel(ChannelDTO channelDTO) {
         if (channelRepository.existsByName(channelDTO.getName())) {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.Channel.CODE_NAME_EXISTS, Errors.Channel.MESSAGE_NAME_EXISTS);
         }
         Channel channel = Channel.builder()
                 .name(channelDTO.getName())
@@ -60,7 +60,7 @@ public class ChannelService {
     @Transactional
     public ChannelDTO updateChannel(ChannelDTO channelDTO) {
         if (channelRepository.existsByIdNotAndName(channelDTO.getId(), channelDTO.getName())) {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.Channel.CODE_NAME_EXISTS, Errors.Channel.MESSAGE_NAME_EXISTS);
         }
         Channel channel = Channel.builder()
                 .id(channelDTO.getId())

@@ -1,7 +1,6 @@
 package org.hvlive.server.demoserver.controller;
 
 import org.hvlive.server.demoserver.dto.ChannelDTO;
-import org.hvlive.server.demoserver.dto.LiveDTO;
 import org.hvlive.server.demoserver.service.ChannelService;
 import org.springframework.web.bind.annotation.*;
 

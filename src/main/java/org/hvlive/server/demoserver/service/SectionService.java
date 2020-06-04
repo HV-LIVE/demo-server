@@ -1,9 +1,9 @@
 package org.hvlive.server.demoserver.service;
 
 import org.hvlive.server.demoserver.dto.SectionDTO;
-import org.hvlive.server.demoserver.dto.UserDTO;
 import org.hvlive.server.demoserver.entity.Section;
 import org.hvlive.server.demoserver.exception.BadRequestException;
+import org.hvlive.server.demoserver.exception.Errors;
 import org.hvlive.server.demoserver.repository.SectionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +44,7 @@ public class SectionService {
     @Transactional
     public SectionDTO createSection(SectionDTO sectionDTO) {
         if (sectionRepository.existsByChannelIdAndName(sectionDTO.getChannelId(), sectionDTO.getName())) {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.Section.CODE_NAME_EXISTS, Errors.Section.MESSAGE_NAME_EXISTS);
         }
         Section channel = Section.builder()
                 .channelId(sectionDTO.getChannelId())
@@ -57,7 +57,7 @@ public class SectionService {
     @Transactional
     public SectionDTO updateSection(SectionDTO sectionDTO) {
         if (sectionRepository.existsByIdNotAndChannelIdAndName(sectionDTO.getId(), sectionDTO.getChannelId(), sectionDTO.getName())) {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.Section.CODE_NAME_EXISTS, Errors.Section.MESSAGE_NAME_EXISTS);
         }
         Section channel = Section.builder()
                 .id(sectionDTO.getId())
