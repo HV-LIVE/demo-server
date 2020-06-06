@@ -20,7 +20,7 @@ public class UserDTO {
     private String password;
     private String name;
     private String phoneNumber;
-    private String streamName;
+    private String streamKey;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
@@ -31,7 +31,7 @@ public class UserDTO {
                 .password(user.getPassword())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())
-                .streamName(user.getStreamName())
+                .streamKey(user.getStreamKey())
                 .createTime(user.getCreateTime())
                 .updateTime(user.getUpdateTime())
                 .build();

@@ -1,5 +1,6 @@
 package org.hvlive.server.demoserver.service;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hvlive.server.demoserver.dto.UserDTO;
 import org.hvlive.server.demoserver.entity.User;
 import org.hvlive.server.demoserver.exception.BadRequestException;
@@ -51,7 +52,7 @@ public class UserService {
                 .password(userDTO.getPassword())
                 .name(userDTO.getName())
                 .phoneNumber(userDTO.getPhoneNumber())
-                .streamName(userDTO.getAccount())
+                .streamKey(DigestUtils.sha1Hex(userDTO.getAccount()))
                 .build();
         userRepository.saveAndFlush(user);
         return UserDTO.fromEntity(user);
@@ -68,7 +69,7 @@ public class UserService {
                 .password(userDTO.getPassword())
                 .name(userDTO.getName())
                 .phoneNumber(userDTO.getPhoneNumber())
-                .streamName(userDTO.getAccount())
+                .streamKey(DigestUtils.sha1Hex(userDTO.getAccount()))
                 .build();
         userRepository.saveAndFlush(user);
         return UserDTO.fromEntity(user);

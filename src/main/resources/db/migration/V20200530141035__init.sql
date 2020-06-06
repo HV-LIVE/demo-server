@@ -17,7 +17,7 @@ CREATE TABLE `user`
     `password`     varchar(50) NOT NULL COMMENT '密码',
     `name`         varchar(50) NOT NULL COMMENT '姓名',
     `phone_number` varchar(11) NOT NULL COMMENT '手机号',
-    `stream_name`  varchar(50) NOT NULL COMMENT '流名',
+    `stream_key`   varchar(50) NOT NULL COMMENT '串流密钥',
     `create_time`  datetime(3) NOT NULL COMMENT '创建时间',
     `update_time`  datetime(3) NOT NULL COMMENT '更新时间',
     PRIMARY KEY (`id`),

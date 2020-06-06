@@ -28,7 +28,7 @@ public class User {
     private String name;
     private String phoneNumber;
 
-    private String streamName;
+    private String streamKey;
 
     @CreationTimestamp
     private LocalDateTime createTime;

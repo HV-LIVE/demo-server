@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     implementation 'org.flywaydb:flyway-core'
+    implementation 'commons-codec:commons-codec:1.14'
     runtimeOnly 'mysql:mysql-connector-java'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
